@@ -16,7 +16,10 @@ jobs:
 
     steps:
       - name: Checkout master
-        uses: actions/checkout@v2
+        uses: echo "Hello World"
+
+      - name: Hello World
+          uses: actions/checkout@v2
 
       - name: Build container image
         run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) .
@@ -43,7 +46,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
-          envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,,CONTAINER_NAME
+          envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,CONTAINER_NAME
           script: |
             # Login into Digital Ocean Registry
             docker login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} $(echo $REGISTRY)
@@ -53,7 +56,6 @@ jobs:
             docker rm $(echo $CONTAINER_NAME)
             # Set env variables
             export TOKEN=${{ secrets.TELEGRAM_TOKEN }}
-            export CONSUMER_KEY=${{ secrets.POCKET_CONSUMER_KEY }}
             export AUTH_SERVER_URL=${{ secrets.AUTH_SERVER_URL }}
             # Run a new container from a new image
             docker run -e TOKEN -e CONSUMER_KEY -e AUTH_SERVER_URL -d \
