@@ -58,7 +58,7 @@ jobs:
             export TOKEN=${{ secrets.TELEGRAM_TOKEN }}
             export AUTH_SERVER_URL=${{ secrets.AUTH_SERVER_URL }}
             # Run a new container from a new image
-            docker-compose -f "docker-compose.yml" up -d \
+            docker-compose -f "docker-compose.yml" up -d --build \
             --restart always \
             --publish 80:80 \
             --name $(echo $CONTAINER_NAME) \
