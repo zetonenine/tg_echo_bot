@@ -5,6 +5,7 @@ volumes:
 
 services:
     bot:
+        image: ${echo $REGISTRY}/${echo $IMAGE_NAME}:${echo $GITHUB_SHA | head -c7}
         build:
             context: .
             dockerfile: Dockerfile
