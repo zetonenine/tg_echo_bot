@@ -58,5 +58,8 @@ jobs:
             export TOKEN=${{ secrets.TELEGRAM_TOKEN }}
             export AUTH_SERVER_URL=${{ secrets.AUTH_SERVER_URL }}
             # Run a new container from a new image
-            docker-compose -f "docker-compose.yml" up -d --name $(echo $CONTAINER_NAME) \
+            docker run -e TOKEN -e CONSUMER_KEY -e AUTH_SERVER_URL -d \
+            --restart always \
+            --publish 80:80 \
+            --name $(echo $CONTAINER_NAME) \
             $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
