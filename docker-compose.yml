@@ -5,6 +5,7 @@ volumes:
 
 services:
     bot:
+        image: tgbot
         build:
             context: .
             dockerfile: Dockerfile
