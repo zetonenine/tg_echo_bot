@@ -22,7 +22,7 @@ jobs:
         run: echo "Hello World"
 
       - name: Build tgbot container image
-        run: docker build -t tgbot
+        run: docker build . -t tgbot
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
