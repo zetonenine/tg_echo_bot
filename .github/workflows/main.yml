@@ -18,19 +18,20 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@v2
 
-      - name: Hello World
-        run: echo "Hello World"
-
-      - name: Build tgbot container image
-        run: docker build . -t tgbot
+      - name: Build container image
+        run: docker build -t tgbot .
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+      - name: Log in to DigitalOcean Container Registry
         run: doctl registry login --expiry-seconds 600
+
+      - name: Tag image
+        run:
+          docker tag tgbot $(echo $REGISTRY)/$(echo $IMAGE_NAME):${{github.event.inputs.version }}
 
       - name: Push image to DigitalOcean Container Registry
         run: docker push tgbot
@@ -48,13 +49,13 @@ jobs:
 #          key: ${{ secrets.SSHKEY }}
 #          envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,CONTAINER_NAME
 #          script: |
-#            # Login into Digital Ocean Registry
+##            # Login into Digital Ocean Registry
 #            docker login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} $(echo $REGISTRY)
-#            # Stop running container
+##            # Stop running container
 #            docker stop $(echo $CONTAINER_NAME)
-#            # Remove old container
+##            # Remove old container
 #            docker rm $(echo $CONTAINER_NAME)
-#            # Set env variables
+##            # Set env variables
 #            export TOKEN=${{ secrets.TELEGRAM_TOKEN }}
 #            export AUTH_SERVER_URL=${{ secrets.AUTH_SERVER_URL }}
 #            # Run a new container from a new image
