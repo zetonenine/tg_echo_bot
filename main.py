@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 # Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
-db = BD()
+# db = BD()
 
 
 @dp.message_handler(commands=['start', 'help'])

@@ -6,6 +6,8 @@ volumes:
 services:
     bot:
         image: tgbot:latest
+        ports:
+          - 80:80
         build:
             context: .
             dockerfile: Dockerfile
