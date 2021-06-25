@@ -37,13 +37,13 @@ jobs:
 
       - name: Tag image
         run:
-          docker tag tgbot $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
+          docker tag tgbot zaytsv/tgbot
 
       - name: Print docker image
         run: docker image ls
 
       - name: Push image to DigitalOcean Container Registry
-        run: docker push tgbot
+        run: docker push zaytsv/tgbot
 
       - name: Print docker image
         run: docker image ls
