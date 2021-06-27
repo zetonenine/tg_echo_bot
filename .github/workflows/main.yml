@@ -9,7 +9,7 @@ env:
   REGISTRY: "registry.digitalocean.com/echo-tg-bot"
   IMAGE_NAME: "docker_tg_bot"
   CONTAINER_NAME: "echo_bot"
-  TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+
 
 jobs:
   build_and_push:
@@ -55,6 +55,10 @@ jobs:
     needs: build_and_push
 
     steps:
+      - name: execute token
+        env:
+          TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+
       - name: Deploy to Digital Ocean droplet via SSH action
         uses: appleboy/ssh-action@v0.1.3
         with:
