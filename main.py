@@ -1,9 +1,10 @@
 import logging
+import os
 
 from aiogram import Bot, Dispatcher, executor, types
-from postgresql import BD
+# from postgresql import BD
 
-API_TOKEN = '1233194283:AAEltBBA7sqZ7HPo5Gxef5fALXiqhyRwBqk'
+API_TOKEN = os.environ['TELEGRAM_TOKEN']
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -42,8 +43,8 @@ async def cats(message: types.Message):
 async def echo(message: types.Message):
     # old style:
     # await bot.send_message(message.chat.id, message.text)
-    db.add_word(message.text)
-    await message.answer(f"{message.text} penises")
+    # db.add_word(message.text)
+    await message.answer(f"Нет, ты {message.text}!")
 
 
 if __name__ == '__main__':

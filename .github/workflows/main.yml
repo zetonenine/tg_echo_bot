@@ -18,14 +18,8 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@v2
 
-      - name: Print full path
-        run: echo $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
-
       - name: Build container image
         run: docker build -t tgbot .
-
-      - name: Print docker image
-        run: docker image ls
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
