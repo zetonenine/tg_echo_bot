@@ -4,6 +4,7 @@ import os
 from aiogram import Bot, Dispatcher, executor, types
 # from postgresql import BD
 
+
 API_TOKEN = os.environ['TOKEN']
 API_TOKEN2 = os.environ.get('TOKEN')
 API_TOKEN3 = os.environ.get('TOKEN').decode('utf8')
