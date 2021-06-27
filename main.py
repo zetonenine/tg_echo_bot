@@ -2,9 +2,10 @@ import logging
 import os
 
 from aiogram import Bot, Dispatcher, executor, types
+from config import TELEGRAM_TOKEN
 # from postgresql import BD
 
-API_TOKEN = os.environ['TELEGRAM_TOKEN']
+API_TOKEN = TELEGRAM_TOKEN
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
