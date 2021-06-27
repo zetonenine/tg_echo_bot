@@ -10,7 +10,7 @@ API_TOKEN = os.environ.get('TELEGRAM_TOKEN')
 logging.basicConfig(level=logging.INFO)
 
 # Initialize bot and dispatcher
-bot = Bot(token=API_TOKEN)
+bot = Bot(token=str(API_TOKEN))
 dp = Dispatcher(bot)
 # db = BD()
 
