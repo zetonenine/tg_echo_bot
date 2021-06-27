@@ -4,13 +4,13 @@ import os
 from aiogram import Bot, Dispatcher, executor, types
 # from postgresql import BD
 
-API_TOKEN = os.environ.get('TELEGRAM_TOKEN')
+API_TOKEN = os.environ.get('TOKEN')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
 # Initialize bot and dispatcher
-bot = Bot(token=str(API_TOKEN))
+bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 # db = BD()
 

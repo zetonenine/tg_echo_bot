@@ -9,6 +9,7 @@ env:
   REGISTRY: "registry.digitalocean.com/echo-tg-bot"
   IMAGE_NAME: "docker_tg_bot"
   CONTAINER_NAME: "echo_bot"
+  TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
 
 jobs:
   build_and_push:
