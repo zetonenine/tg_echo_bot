@@ -5,13 +5,10 @@ from aiogram import Bot, Dispatcher, executor, types
 # from postgresql import BD
 
 
-API_TOKEN = os.environ['TOKEN']
-API_TOKEN2 = os.environ.get('TOKEN')
-API_TOKEN3 = os.environ.get('TOKEN').decode('utf8')
+API_TOKEN = TOKEN
 
-print(API_TOKEN)
-print(API_TOKEN2)
-print(API_TOKEN3)
+print(os.environ['TOKEN'])
+print(TOKEN)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
