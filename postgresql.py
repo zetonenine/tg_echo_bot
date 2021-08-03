@@ -1,32 +1,52 @@
+import logging
 import psycopg2
+from sqlalchemy import create_engine, Column, Integer, String, MetaData
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy_utils import database_exists, create_database
 
-class BD:
+log = logging.getLogger(__name__)
 
-    def __init__(self, user="postgres", password="postgres", dbname="postgres"):
-        self.connection = psycopg2.connect(
-            user=user,
-            password=password,
-            dbname=dbname)
-        self.cursor = self.connection.cursor()
+path = "postgresql+psycopg2://localhost/postgres"
+engine = create_engine(path, echo=True)
+metadata = MetaData(bind=engine)
+Base = declarative_base(metadata=metadata)
 
-    def create(self):
-        commands = (
-            """
-            CREATE TABLE IF NOT EXISTS words (
-                id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-                word INTEGER NOT NULL
-                )
-            """
-        )
-        with self.connection:
-            return self.cursor.execute(commands)
+
+class Words(Base):
+
+    __tablename__ = 'words'
+
+    id = Column(Integer, primary_key=True)
+    text = Column(String)
+
+    def __init__(self, text):
+        self.text = text
+
+    def __repr__(self):
+        return "<Words(text='%s')>" % (self.text)
+
+
+class Database:
+
+
+    def __init__(self):
+        if not database_exists(engine.url):
+            create_database(engine.url)
+            log.info('База данных создана')
+            print('База данных создана')
+
+        Base.metadata.create_all(engine)
+
+        Session = sessionmaker(bind=engine)
+        self.session = Session()
 
     def add_word(self, word):
-        with self.connection:
-            return self.cursor.execute("INSERT INTO words (word) VALUES (%s)", (word,))
+        word_inst = Words(text=word)
+        self.session.add(word_inst)
+        self.session.commit()
 
-    def show_word(self, word):
-        with self.connection:
-            self.cursor.execute("SELECT id FROM words WHERE word =(%s)", (word,))
-            obj = self.cursor.fetchall()
-            return obj
+    def show_words(self):
+        result = self.session.query(Words.text).all()
+        self.session.commit()
+        return result
