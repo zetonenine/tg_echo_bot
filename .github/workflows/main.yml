@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  REGISTRY: "registry.digitalocean.com/echo-tg-bot"
+  REGISTRY: "registry.digitalocean.com/tg-container"
   IMAGE_NAME: "docker_tg_bot"
   CONTAINER_NAME: "echo_bot"
 
@@ -53,13 +53,14 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,CONTAINER_NAME
           script: |
-            # Login into Digital Ocean Registry
-            docker login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} $(echo $REGISTRY)
-            # Stop running container
-            docker stop $(echo $CONTAINER_NAME)
-            # Remove old container
-            docker rm $(echo $CONTAINER_NAME)
-            # Set env variables
-            export TOKEN=${{ secrets.TELEGRAM_TOKEN }}
-            # Run a new container from a new image
-            docker run -e TOKEN -d --name $(echo $CONTAINER_NAME) $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
+            echo "Deploynment succesful!"
+#            # Login GITHUB_SHAinto Digital Ocean Registry
+#            docker login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} $(echo $REGISTRY)
+#            # Stop running container
+#            docker stop $(echo $CONTAINER_NAME)
+#            # Remove old container
+#            docker rm $(echo $CONTAINER_NAME)
+#            # Set env variables
+#            export TOKEN=${{ secrets.TELEGRAM_TOKEN }}
+#            # Run a new container from a new image
+#            docker run -e TOKEN --restart always -d --name $(echo $CONTAINER_NAME) $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
